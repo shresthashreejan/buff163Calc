@@ -1,15 +1,17 @@
 <script>
+	// Variables to store results
+	let priceInUSD;
+	let priceInNPR;
+
 	function csvUpload() {
 		const csvInput = document.getElementById('csvInput');
 		const selectedFile = csvInput.files[0];
-
-		let data;
 		const reader = new FileReader();
 
 		reader.onload = async function (event) {
 			const csvText = event.target.result;
 			const rows = csvText.split('\n');
-			data = rows.map((row) => row.split(','));
+			let data = rows.map((row) => row.split(','));
 
 			const yenPrices = getSalePrices(data);
 
@@ -29,17 +31,20 @@
 				}
 
 				const currencyData = await response.json();
+				let afterfees = totalAmount * 0.975;
+
+				priceInUSD = (afterfees * currencyData.cny.usd).toFixed(2);
+				priceInNPR = (afterfees * currencyData.cny.npr).toFixed(2);
+
+				const modal = document.getElementById('modal');
+				modal.showModal();
+
 				console.log('CNY TO USD CONVERSION RATE: ' + currencyData.cny.usd);
 				console.log('CNY TO NPR CONVERSION RATE: ' + currencyData.cny.npr);
-
-				const afterfees = totalAmount * 0.975;
 				console.log('TOTAL AMOUNT: CNY ' + totalAmount.toFixed(2));
 				console.log('TOTAL AMOUNT AFTER FEES: CNY ' + afterfees.toFixed(2));
-
-				const priceInUSD = afterfees * currencyData.cny.usd;
-				const priceInNPR = afterfees * currencyData.cny.npr;
-				console.log('TOTAL SALES AMOUNT: USD ' + priceInUSD.toFixed(2));
-				console.log('TOTAL SALES AMOUNT: NPR ' + priceInNPR.toFixed(2));
+				console.log('TOTAL SALES AMOUNT: USD ' + priceInUSD);
+				console.log('TOTAL SALES AMOUNT: NPR ' + priceInNPR);
 			} catch {
 				console.error('Error fetching data:', error);
 			}
@@ -67,3 +72,14 @@
 		</div>
 	</div>
 </div>
+
+<dialog id="modal" class="modal">
+	<form method="dialog" class="modal-box">
+		<h3 class="font-bold text-lg">Stats</h3>
+		<p>Total Sales (USD): {priceInUSD}</p>
+		<p>Total Sales (NPR): {priceInNPR}</p>
+		<div class="modal-action">
+			<button class="btn">Close</button>
+		</div>
+	</form>
+</dialog>
