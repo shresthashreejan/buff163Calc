@@ -1,4 +1,15 @@
 <script>
+	import { spring } from 'svelte/motion';
+
+	let coords = spring(
+		{ x: 50, y: 50 },
+		{
+			stiffness: 0.1,
+			damping: 0.5
+		}
+	);
+	let size = spring(30);
+
 	// Variables to store results
 	let priceInUSD;
 	let priceInNPR;
@@ -60,14 +71,26 @@
 	}
 </script>
 
-<div class="flex justify-center items-center min-h-screen">
-	<div class="card w-auto bg-base-100 shadow-xl">
-		<div class="card-body items-center text-center">
-			<h2 class="text-4xl uppercase py-4">BUFF163 Sales Calculator</h2>
-			<p class="text-lg">Upload your csv file!</p>
-			<div class="card-actions flex justify-center items-center">
-				<input type="file" id="csvInput" class="file-input file-input-bordered w-full max-w-xs" />
-				<button class="btn btn-primary" on:click={csvUpload}>Upload</button>
+<div class="flex justify-center min-h-screen">
+	<div class="flex-col justify-center items-center">
+		<div class="uppercase py-10 text-3xl md:text-7xl lg:text-8xl flex justify-center">
+			BUFF163 Sales Calculator
+		</div>
+		<div class="flex justify-center items-center h-1/2">
+			<div class="card bg-base-100 shadow-xl w-1/2 h-1/2">
+				<div class="card-body flex justify-center">
+					<div class="card-actions flex justify-center">
+						<input
+							type="file"
+							id="csvInput"
+							class="file-input file-input-secondary hover:file-input-primary w-full max-w-xs z-10"
+						/>
+						<button
+							class="btn btn-primary z-10 border-0 bg-secondary hover:bg-primary text-white"
+							on:click={csvUpload}>Upload</button
+						>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -83,3 +106,13 @@
 		</div>
 	</form>
 </dialog>
+
+<svg
+	class="absolute w-full h-full left-0 top-0"
+	on:pointermove={(e) => {
+		coords.set({ x: e.clientX, y: e.clientY });
+		e.stopPropagation();
+	}}
+>
+	<circle class="fill-secondary" cx={$coords.x} cy={$coords.y} r={$size} />
+</svg>
