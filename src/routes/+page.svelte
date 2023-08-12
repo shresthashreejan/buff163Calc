@@ -1,6 +1,19 @@
 <script>
+	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
+	import { fade, fly, slide } from 'svelte/transition';
+	import { backInOut } from 'svelte/easing';
 
+	// Variables to store results
+	let priceInUSD;
+	let priceInNPR;
+
+	let loadedDOM = false;
+	onMount(() => {
+		loadedDOM = true;
+	});
+
+	let size = spring(30);
 	let coords = spring(
 		{ x: 50, y: 50 },
 		{
@@ -8,11 +21,6 @@
 			damping: 0.5
 		}
 	);
-	let size = spring(30);
-
-	// Variables to store results
-	let priceInUSD;
-	let priceInNPR;
 
 	function csvUpload() {
 		const csvInput = document.getElementById('csvInput');
@@ -71,48 +79,62 @@
 	}
 </script>
 
-<div class="flex justify-center min-h-screen">
-	<div class="flex-col justify-center items-center">
-		<div class="uppercase py-10 text-3xl md:text-7xl lg:text-8xl flex justify-center">
-			BUFF163 Sales Calculator
-		</div>
-		<div class="flex justify-center items-center h-1/2">
-			<div class="card bg-base-100 shadow-xl w-1/2 h-1/2">
-				<div class="card-body flex justify-center">
-					<div class="card-actions flex justify-center">
-						<input
-							type="file"
-							id="csvInput"
-							class="file-input file-input-secondary hover:file-input-primary w-full max-w-xs z-10"
-						/>
-						<button
-							class="btn btn-primary z-10 border-0 bg-secondary hover:bg-primary text-white"
-							on:click={csvUpload}>Upload</button
-						>
+{#if loadedDOM}
+	<div class="flex justify-center min-h-screen">
+		<div class="flex-col justify-center items-center">
+			<div
+				in:fly={{ y: 200, duration: 1000 }}
+				out:fade
+				class="uppercase py-10 text-3xl md:text-7xl lg:text-8xl flex justify-center"
+			>
+				BUFF163 Sales Calculator
+			</div>
+			<div class="flex justify-center items-center h-1/4">
+				<div
+					in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
+					class="card z-10 bg-base-100 shadow-xl w-full md:w-1/2"
+				>
+					<div
+						in:fade={{
+							duration: 500
+						}}
+						class="card-body flex justify-center"
+					>
+						<div class="card-actions flex justify-center">
+							<input
+								type="file"
+								id="csvInput"
+								class="file-input file-input-secondary hover:file-input-primary w-full max-w-xs"
+							/>
+							<button
+								class="btn btn-primary border-0 bg-secondary hover:bg-primary text-white"
+								on:click={csvUpload}>Upload</button
+							>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<dialog id="modal" class="modal">
-	<form method="dialog" class="modal-box">
-		<h3 class="font-bold text-lg">Stats</h3>
-		<p>Total Sales (USD): {priceInUSD}</p>
-		<p>Total Sales (NPR): {priceInNPR}</p>
-		<div class="modal-action">
-			<button class="btn">Close</button>
-		</div>
-	</form>
-</dialog>
+	<dialog id="modal" class="modal">
+		<form method="dialog" class="modal-box">
+			<h3 class="font-bold text-lg">Stats</h3>
+			<p>Total Sales (USD): {priceInUSD}</p>
+			<p>Total Sales (NPR): {priceInNPR}</p>
+			<div class="modal-action">
+				<button class="btn">Close</button>
+			</div>
+		</form>
+	</dialog>
 
-<svg
-	class="absolute w-full h-full left-0 top-0"
-	on:pointermove={(e) => {
-		coords.set({ x: e.clientX, y: e.clientY });
-		e.stopPropagation();
-	}}
->
-	<circle class="fill-secondary" cx={$coords.x} cy={$coords.y} r={$size} />
-</svg>
+	<svg
+		class="absolute w-full h-full left-0 top-0"
+		on:mousemove={(e) => {
+			coords.set({ x: e.clientX, y: e.clientY });
+			e.stopPropagation();
+		}}
+	>
+		<circle class="fill-secondary" cx={$coords.x} cy={$coords.y} r={$size} />
+	</svg>
+{/if}
