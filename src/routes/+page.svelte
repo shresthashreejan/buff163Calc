@@ -13,7 +13,7 @@
 		loadedDOM = true;
 	});
 
-	let size = spring(30);
+	let size = spring(25);
 	let coords = spring(
 		{ x: 50, y: 50 },
 		{
@@ -83,16 +83,16 @@
 	<div class="flex justify-center min-h-screen">
 		<div class="flex-col justify-center items-center">
 			<div
-				in:fly={{ y: 200, duration: 1000 }}
+				in:fly={{ y: 500, duration: 1000, opacity: -10 }}
 				out:fade
-				class="uppercase py-10 text-3xl md:text-7xl lg:text-8xl flex justify-center"
+				class="uppercase py-10 my-10 text-3xl md:text-7xl lg:text-8xl flex justify-center italic"
 			>
 				BUFF163 Sales Calculator
 			</div>
-			<div class="flex justify-center items-center h-1/4">
+			<div class="flex justify-center items-center h-1/4 my-10">
 				<div
 					in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
-					class="card z-10 bg-base-100 shadow-xl w-full md:w-1/2"
+					class="card z-10 shadow-xl w-full md:w-1/2 bg-slate-100"
 				>
 					<div
 						in:fade={{
@@ -100,14 +100,24 @@
 						}}
 						class="card-body flex justify-center"
 					>
-						<div class="card-actions flex justify-center">
+						<div class="flex flex-col justify-center items-center">
+							<div class="py-2">
+								Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
+							</div>
+							<div class="pb-2">Navigate to 'Sale' tab followed by 'Sale History' section</div>
+							<div class="pb-2">Click the 'Export Records' button</div>
+							<div class="pb-2">Choose 'sell order' type and define the date range</div>
+							<div class="pb-2">Confirm and download 'CSV' file</div>
+						</div>
+
+						<div class="card-actions flex justify-center items-center my-5">
 							<input
 								type="file"
 								id="csvInput"
-								class="file-input file-input-secondary hover:file-input-primary w-full max-w-xs"
+								class="file-input file-input-secondary w-full max-w-xs"
 							/>
 							<button
-								class="btn btn-primary border-0 bg-secondary hover:bg-primary text-white"
+								class="btn btn-primary border-0 bg-secondary hover:bg-white text-white hover:text-secondary"
 								on:click={csvUpload}>Upload</button
 							>
 						</div>
