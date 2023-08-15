@@ -4,6 +4,15 @@
 	import { fade, fly, slide } from 'svelte/transition';
 	import { backInOut } from 'svelte/easing';
 
+	// Import images
+	import dragonlore from '$lib/assets/dragonlore.jpg';
+	import gungnir from '$lib/assets/gungnir.jpg';
+	import casehardened from '$lib/assets/casehardened.jpg';
+	import wildlotus from '$lib/assets/wildlotus.jpg';
+	import fireserpent from '$lib/assets/fireserpent.jpg';
+	import nightwish from '$lib/assets/nightwish.jpg';
+	import printstream from '$lib/assets/printstream.jpg';
+
 	// Variables to store results
 	let priceInUSD;
 	let priceInNPR;
@@ -85,14 +94,14 @@
 			<div
 				in:fly={{ y: 500, duration: 1000, opacity: -10 }}
 				out:fade
-				class="uppercase py-10 my-10 text-3xl md:text-7xl lg:text-8xl flex justify-center italic"
+				class="uppercase p-10 mb-28 sm:mb-4 lg:mb-10 text-3xl sm:text-6xl md:text-7xl lg:text-8xl flex justify-center text-center italic"
 			>
 				BUFF163 Sales Calculator
 			</div>
-			<div class="flex justify-center items-center h-1/4 my-10">
+			<div class="flex justify-center items-center h-1/4">
 				<div
 					in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
-					class="card z-10 shadow-xl w-full md:w-1/2 bg-slate-100"
+					class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-100"
 				>
 					<div
 						in:fade={{
@@ -100,7 +109,7 @@
 						}}
 						class="card-body flex justify-center"
 					>
-						<div class="flex flex-col justify-center items-center">
+						<div class="flex flex-col justify-center items-start md:items-center">
 							<div class="py-2">
 								Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
 							</div>
@@ -110,7 +119,7 @@
 							<div class="pb-2">Confirm and download 'CSV' file</div>
 						</div>
 
-						<div class="card-actions flex justify-center items-center my-5">
+						<div class="card-actions flex justify-center items-center my-1 md:my-5">
 							<input
 								type="file"
 								id="csvInput"
@@ -145,6 +154,46 @@
 			e.stopPropagation();
 		}}
 	>
-		<circle class="fill-secondary" cx={$coords.x} cy={$coords.y} r={$size} />
+		<circle class="fill-secondary invisible md:visible" cx={$coords.x} cy={$coords.y} r={$size} />
 	</svg>
+
+	<div class="absolute gap-4 left-1/2 top-[65%] hidden xl:flex">
+		<img
+			class="image w-96 h-auto"
+			src={dragonlore}
+			alt="Image of AWP Dragon Lore"
+			draggable="false"
+		/>
+		<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
+		<img
+			class="image w-96 h-auto"
+			src={casehardened}
+			alt="Image of AK-47 Case Hardened"
+			draggable="false"
+		/>
+		<img
+			class="image w-96 h-auto"
+			src={wildlotus}
+			alt="Image of AK-47 Wild Lotus"
+			draggable="false"
+		/>
+		<img
+			class="image w-96 h-auto"
+			src={fireserpent}
+			alt="Image of AK-47 Fire Serpent"
+			draggable="false"
+		/>
+		<img
+			class="image w-96 h-auto"
+			src={nightwish}
+			alt="Image of AK-47 Nightwish"
+			draggable="false"
+		/>
+		<img
+			class="image w-96 h-auto"
+			src={printstream}
+			alt="Image of M4A1-s Printstream"
+			draggable="false"
+		/>
+	</div>
 {/if}
