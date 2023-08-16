@@ -89,46 +89,48 @@
 </script>
 
 {#if loadedDOM}
-	<div class="flex justify-center min-h-screen">
+	<div class="flex md:justify-center min-h-screen">
 		<div class="flex-col justify-center items-center">
 			<div
 				in:fly={{ y: 500, duration: 1000, opacity: -10 }}
 				out:fade
-				class="uppercase p-10 mb-28 sm:mb-4 lg:mb-10 text-3xl sm:text-6xl md:text-7xl lg:text-8xl flex justify-center text-center italic"
+				class="uppercase p-10 text-5xl sm:text-6xl md:text-7xl lg:text-8xl flex justify-center text-center italic"
 			>
 				BUFF163 Sales Calculator
 			</div>
-			<div class="flex justify-center items-center h-1/4">
-				<div
-					in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
-					class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-100"
-				>
+			<div>
+				<div class="flex justify-center items-center h-1/4">
 					<div
-						in:fade={{
-							duration: 500
-						}}
-						class="card-body flex justify-center"
+						in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
+						class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-100"
 					>
-						<div class="flex flex-col justify-center items-start md:items-center">
-							<div class="py-2">
-								Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
+						<div
+							in:fade={{
+								duration: 500
+							}}
+							class="card-body flex justify-center"
+						>
+							<div class="flex flex-col justify-center items-start md:items-center">
+								<div class="py-2">
+									Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
+								</div>
+								<div class="pb-2">Navigate to 'Sale' tab followed by 'Sale History' section</div>
+								<div class="pb-2">Click the 'Export Records' button</div>
+								<div class="pb-2">Choose 'sell order' type and define the date range</div>
+								<div class="pb-2">Confirm and download 'CSV' file</div>
 							</div>
-							<div class="pb-2">Navigate to 'Sale' tab followed by 'Sale History' section</div>
-							<div class="pb-2">Click the 'Export Records' button</div>
-							<div class="pb-2">Choose 'sell order' type and define the date range</div>
-							<div class="pb-2">Confirm and download 'CSV' file</div>
-						</div>
 
-						<div class="card-actions flex justify-center items-center my-1 md:my-5">
-							<input
-								type="file"
-								id="csvInput"
-								class="file-input file-input-secondary w-full max-w-xs"
-							/>
-							<button
-								class="btn btn-primary border-0 bg-secondary hover:bg-white text-white hover:text-secondary"
-								on:click={csvUpload}>Upload</button
-							>
+							<div class="card-actions flex justify-center items-center my-1 md:my-3">
+								<input
+									type="file"
+									id="csvInput"
+									class="file-input file-input-secondary w-full max-w-xs"
+								/>
+								<button
+									class="btn btn-primary border-0 bg-secondary hover:bg-white text-white hover:text-secondary"
+									on:click={csvUpload}>Upload</button
+								>
+							</div>
 						</div>
 					</div>
 				</div>
