@@ -20,6 +20,7 @@
 	let loadedDOM = false;
 	onMount(() => {
 		loadedDOM = true;
+		// setThemePreference();
 	});
 
 	let size = spring(25);
@@ -86,9 +87,33 @@
 		});
 		return yenPrices;
 	}
+
+	// function setThemePreference() {
+	// 	const userPreference = window.matchMedia('(prefers-color-scheme: dark)');
+	// 	const htmlElement = document.querySelector('html');
+	// 	if (userPreference.matches) {
+	// 		htmlElement.setAttribute('data-theme', 'dracula');
+	// 	} else {
+	// 		htmlElement.setAttribute('data-theme', 'emerald');
+	// 	}
+	// }
+
+	// function toggleTheme() {
+	// 	const htmlElement = document.querySelector('html');
+	// 	const currentTheme = htmlElement.getAttribute('data-theme');
+
+	// 	if (currentTheme === 'emerald') {
+	// 		htmlElement.setAttribute('data-theme', 'dracula');
+	// 	} else {
+	// 		htmlElement.setAttribute('data-theme', 'emerald');
+	// 	}
+	// }
 </script>
 
 {#if loadedDOM}
+	<!-- <nav>
+		<button class="absolute p-7 bg-neutral z-10" on:click={toggleTheme}> toggle </button>
+	</nav> -->
 	<div class="flex md:justify-center min-h-screen">
 		<div class="flex-col justify-center items-center">
 			<div
@@ -159,43 +184,106 @@
 		<circle class="fill-secondary invisible md:visible" cx={$coords.x} cy={$coords.y} r={$size} />
 	</svg>
 
-	<div class="absolute gap-4 left-1/2 top-[65%] hidden xl:flex">
-		<img
-			class="image w-96 h-auto"
-			src={dragonlore}
-			alt="Image of AWP Dragon Lore"
-			draggable="false"
-		/>
-		<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
-		<img
-			class="image w-96 h-auto"
-			src={casehardened}
-			alt="Image of AK-47 Case Hardened"
-			draggable="false"
-		/>
-		<img
-			class="image w-96 h-auto"
-			src={wildlotus}
-			alt="Image of AK-47 Wild Lotus"
-			draggable="false"
-		/>
-		<img
-			class="image w-96 h-auto"
-			src={fireserpent}
-			alt="Image of AK-47 Fire Serpent"
-			draggable="false"
-		/>
-		<img
-			class="image w-96 h-auto"
-			src={nightwish}
-			alt="Image of AK-47 Nightwish"
-			draggable="false"
-		/>
-		<img
-			class="image w-96 h-auto"
-			src={printstream}
-			alt="Image of M4A1-s Printstream"
-			draggable="false"
-		/>
+	<div
+		in:fly={{ y: 500, duration: 1000, opacity: -10 }}
+		out:fade
+		class="absolute top-[60%] hidden xl:flex"
+	>
+		<div class="flex">
+			<div class="flex slide-container">
+				<img
+					class="image w-96 h-auto"
+					src={dragonlore}
+					alt="Image of AWP Dragon Lore"
+					draggable="false"
+				/>
+				<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
+				<img
+					class="image w-96 h-auto"
+					src={casehardened}
+					alt="Image of AK-47 Case Hardened"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={wildlotus}
+					alt="Image of AK-47 Wild Lotus"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={fireserpent}
+					alt="Image of AK-47 Fire Serpent"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={nightwish}
+					alt="Image of AK-47 Nightwish"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={printstream}
+					alt="Image of M4A1-s Printstream"
+					draggable="false"
+				/>
+			</div>
+			<div class="flex slide-container">
+				<img
+					class="image w-96 h-auto"
+					src={dragonlore}
+					alt="Image of AWP Dragon Lore"
+					draggable="false"
+				/>
+				<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
+				<img
+					class="image w-96 h-auto"
+					src={casehardened}
+					alt="Image of AK-47 Case Hardened"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={wildlotus}
+					alt="Image of AK-47 Wild Lotus"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={fireserpent}
+					alt="Image of AK-47 Fire Serpent"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={nightwish}
+					alt="Image of AK-47 Nightwish"
+					draggable="false"
+				/>
+				<img
+					class="image w-96 h-auto"
+					src={printstream}
+					alt="Image of M4A1-s Printstream"
+					draggable="false"
+				/>
+			</div>
+		</div>
 	</div>
 {/if}
+
+<style lang="postcss">
+	@keyframes slide {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
+	}
+
+	.slide-container {
+		min-width: 100%;
+		animation: 5s slide infinite linear;
+	}
+</style>
