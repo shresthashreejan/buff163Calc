@@ -8,10 +8,7 @@
 	import dragonlore from '$lib/assets/dragonlore.jpg';
 	import gungnir from '$lib/assets/gungnir.jpg';
 	import casehardened from '$lib/assets/casehardened.jpg';
-	import wildlotus from '$lib/assets/wildlotus.jpg';
-	import fireserpent from '$lib/assets/fireserpent.jpg';
-	import nightwish from '$lib/assets/nightwish.jpg';
-	import printstream from '$lib/assets/printstream.jpg';
+	import toggleicon from '$lib/assets/toggleicon.webp';
 
 	// Variables to store results
 	let priceInUSD;
@@ -20,7 +17,7 @@
 	let loadedDOM = false;
 	onMount(() => {
 		loadedDOM = true;
-		// setThemePreference();
+		setThemePreference();
 	});
 
 	let size = spring(25);
@@ -88,32 +85,42 @@
 		return yenPrices;
 	}
 
-	// function setThemePreference() {
-	// 	const userPreference = window.matchMedia('(prefers-color-scheme: dark)');
-	// 	const htmlElement = document.querySelector('html');
-	// 	if (userPreference.matches) {
-	// 		htmlElement.setAttribute('data-theme', 'dracula');
-	// 	} else {
-	// 		htmlElement.setAttribute('data-theme', 'emerald');
-	// 	}
-	// }
+	function setThemePreference() {
+		const userPreference = window.matchMedia('(prefers-color-scheme: dark)');
+		const htmlElement = document.querySelector('html');
+		htmlElement.className = 'transition-all';
+		if (userPreference.matches) {
+			htmlElement.setAttribute('data-theme', 'dracula');
+		} else {
+			htmlElement.setAttribute('data-theme', 'emerald');
+		}
+	}
 
-	// function toggleTheme() {
-	// 	const htmlElement = document.querySelector('html');
-	// 	const currentTheme = htmlElement.getAttribute('data-theme');
+	function toggleTheme() {
+		const htmlElement = document.querySelector('html');
+		const currentTheme = htmlElement.getAttribute('data-theme');
 
-	// 	if (currentTheme === 'emerald') {
-	// 		htmlElement.setAttribute('data-theme', 'dracula');
-	// 	} else {
-	// 		htmlElement.setAttribute('data-theme', 'emerald');
-	// 	}
-	// }
+		if (currentTheme === 'emerald') {
+			htmlElement.setAttribute('data-theme', 'dracula');
+		} else {
+			htmlElement.setAttribute('data-theme', 'emerald');
+		}
+	}
 </script>
 
 {#if loadedDOM}
-	<!-- <nav>
-		<button class="absolute p-7 bg-neutral z-10" on:click={toggleTheme}> toggle </button>
-	</nav> -->
+	<div
+		id="toggle"
+		class="absolute w-36 h-36 top-[-50px] left-[-50px] bg-secondary rounded-full cursor-pointer z-10"
+		on:click={toggleTheme}
+	>
+		<img
+			id="toggle-icon"
+			src={toggleicon}
+			class="h-9 absolute z-10 top-14 left-14 mix-blend-overlay opacity-0"
+		/>
+	</div>
+
 	<div class="flex md:justify-center min-h-screen">
 		<div class="flex-col justify-center items-center">
 			<div
@@ -127,7 +134,7 @@
 				<div class="flex justify-center items-center h-1/4">
 					<div
 						in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
-						class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-100"
+						class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-700"
 					>
 						<div
 							in:fade={{
@@ -135,7 +142,7 @@
 							}}
 							class="card-body flex justify-center"
 						>
-							<div class="flex flex-col justify-center items-start md:items-center">
+							<div class="flex flex-col justify-center items-start md:items-center text-white">
 								<div class="py-2">
 									Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
 								</div>
@@ -179,6 +186,10 @@
 		on:mousemove={(e) => {
 			coords.set({ x: e.clientX, y: e.clientY });
 			e.stopPropagation();
+			document.getElementById('toggle').className =
+				'absolute w-28 h-28 top-[-50px] left-[-50px] bg-secondary rounded-full cursor-pointer z-10 flex transition-all';
+			document.getElementById('toggle-icon').className =
+				'h-9 absolute z-10 top-14 left-14 mix-blend-overlay opacity-100 transition-all delay-500';
 		}}
 	>
 		<circle class="fill-secondary invisible md:visible" cx={$coords.x} cy={$coords.y} r={$size} />
@@ -191,80 +202,22 @@
 	>
 		<div class="flex">
 			<div class="flex slide-container">
+				<img class="image" src={dragonlore} alt="Image of AWP Dragon Lore" draggable="false" />
+				<img class="image" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
 				<img
-					class="image w-96 h-auto"
-					src={dragonlore}
-					alt="Image of AWP Dragon Lore"
-					draggable="false"
-				/>
-				<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
-				<img
-					class="image w-96 h-auto"
+					class="image"
 					src={casehardened}
 					alt="Image of AK-47 Case Hardened"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={wildlotus}
-					alt="Image of AK-47 Wild Lotus"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={fireserpent}
-					alt="Image of AK-47 Fire Serpent"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={nightwish}
-					alt="Image of AK-47 Nightwish"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={printstream}
-					alt="Image of M4A1-s Printstream"
 					draggable="false"
 				/>
 			</div>
 			<div class="flex slide-container">
+				<img class="image" src={dragonlore} alt="Image of AWP Dragon Lore" draggable="false" />
+				<img class="image" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
 				<img
-					class="image w-96 h-auto"
-					src={dragonlore}
-					alt="Image of AWP Dragon Lore"
-					draggable="false"
-				/>
-				<img class="image w-96 h-auto" src={gungnir} alt="Image of AWP Gungnir" draggable="false" />
-				<img
-					class="image w-96 h-auto"
+					class="image"
 					src={casehardened}
 					alt="Image of AK-47 Case Hardened"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={wildlotus}
-					alt="Image of AK-47 Wild Lotus"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={fireserpent}
-					alt="Image of AK-47 Fire Serpent"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={nightwish}
-					alt="Image of AK-47 Nightwish"
-					draggable="false"
-				/>
-				<img
-					class="image w-96 h-auto"
-					src={printstream}
-					alt="Image of M4A1-s Printstream"
 					draggable="false"
 				/>
 			</div>
@@ -281,9 +234,13 @@
 			transform: translateX(-100%);
 		}
 	}
-
 	.slide-container {
 		min-width: 100%;
 		animation: 5s slide infinite linear;
+	}
+	.image {
+		width: 100%;
+		height: 250px;
+		object-fit: cover;
 	}
 </style>
