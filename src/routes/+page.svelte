@@ -88,22 +88,29 @@
 	function setThemePreference() {
 		const userPreference = window.matchMedia('(prefers-color-scheme: dark)');
 		const htmlElement = document.querySelector('html');
+		const cardElement = document.querySelector('#card');
+
 		htmlElement.className = 'transition-all';
 		if (userPreference.matches) {
 			htmlElement.setAttribute('data-theme', 'dracula');
+			cardElement.className = 'card z-10 shadow-xl w-full lg:w-1/2 bg-neutral';
 		} else {
 			htmlElement.setAttribute('data-theme', 'emerald');
+			cardElement.className = 'card z-10 shadow-xl w-full lg:w-1/2 bg-slate-200';
 		}
 	}
 
 	function toggleTheme() {
 		const htmlElement = document.querySelector('html');
 		const currentTheme = htmlElement.getAttribute('data-theme');
+		const cardElement = document.querySelector('#card');
 
 		if (currentTheme === 'emerald') {
 			htmlElement.setAttribute('data-theme', 'dracula');
+			cardElement.className = 'card z-10 shadow-xl w-full lg:w-1/2 bg-neutral';
 		} else {
 			htmlElement.setAttribute('data-theme', 'emerald');
+			cardElement.className = 'card z-10 shadow-xl w-full lg:w-1/2 bg-slate-200';
 		}
 	}
 </script>
@@ -117,7 +124,7 @@
 		<img
 			id="toggle-icon"
 			src={toggleicon}
-			class="h-9 absolute z-10 top-14 left-14 mix-blend-overlay opacity-0"
+			class="h-9 absolute z-10 top-14 left-14 mix-blend-overlay opacity-0 select-none"
 		/>
 	</div>
 
@@ -133,8 +140,9 @@
 			<div>
 				<div class="flex justify-center items-center h-1/4">
 					<div
+						id="card"
 						in:slide={{ duration: 1000, axis: 'y', easing: backInOut }}
-						class="card z-10 shadow-xl w-full lg:w-1/2 bg-slate-700"
+						class="card z-10 shadow-xl w-full lg:w-1/2 bg-neutral"
 					>
 						<div
 							in:fade={{
@@ -142,7 +150,7 @@
 							}}
 							class="card-body flex justify-center"
 						>
-							<div class="flex flex-col justify-center items-start md:items-center text-white">
+							<div class="flex flex-col justify-center items-start md:items-center">
 								<div class="py-2">
 									Login to your <a href="https://buff.163.com/"><strong>BUFF163</strong></a> account
 								</div>
@@ -223,6 +231,12 @@
 			</div>
 		</div>
 	</div>
+
+	<footer class="footer footer-center p-4 z-50 absolute bottom-0">
+		<div>
+			<p class="italic">developed by <a href="https://github.com/shreejan-shrestha">shreejan</a></p>
+		</div>
+	</footer>
 {/if}
 
 <style lang="postcss">
