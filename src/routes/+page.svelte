@@ -11,8 +11,11 @@
 	import toggleicon from '$lib/assets/toggleicon.webp';
 
 	// Variables to store results
+	let priceInCNY;
 	let priceInUSD;
 	let priceInNPR;
+	let conversionUSD;
+	let conversionNPR;
 
 	let loadedDOM = false;
 	onMount(() => {
@@ -59,18 +62,14 @@
 				const currencyData = await response.json();
 				let afterfees = totalAmount * 0.975;
 
+				priceInCNY = afterfees.toFixed(2);
 				priceInUSD = (afterfees * currencyData.cny.usd).toFixed(2);
 				priceInNPR = (afterfees * currencyData.cny.npr).toFixed(2);
+				conversionUSD = currencyData.cny.usd;
+				conversionNPR = currencyData.cny.npr;
 
 				const modal = document.getElementById('modal');
 				modal.showModal();
-
-				console.log('CNY TO USD CONVERSION RATE: ' + currencyData.cny.usd);
-				console.log('CNY TO NPR CONVERSION RATE: ' + currencyData.cny.npr);
-				console.log('TOTAL AMOUNT: CNY ' + totalAmount.toFixed(2));
-				console.log('TOTAL AMOUNT AFTER FEES: CNY ' + afterfees.toFixed(2));
-				console.log('TOTAL SALES AMOUNT: USD ' + priceInUSD);
-				console.log('TOTAL SALES AMOUNT: NPR ' + priceInNPR);
 			} catch {
 				console.error('Error fetching data:', error);
 			}
@@ -180,9 +179,20 @@
 
 	<dialog id="modal" class="modal">
 		<form method="dialog" class="modal-box">
-			<h3 class="font-bold text-lg">Stats</h3>
-			<p>Total Sales (USD): {priceInUSD}</p>
-			<p>Total Sales (NPR): {priceInNPR}</p>
+			<h1 class="font-bold text-3xl flex justify-center uppercase italic">Stats</h1>
+			<hr class="my-4 opacity-20" />
+			<div>
+				<h3 class="text-2xl italic">Total Sales</h3>
+				<p class="text-lg">CNY: {priceInCNY}</p>
+				<p class="text-lg">USD: {priceInUSD}</p>
+				<p class="text-lg">NPR: {priceInNPR}</p>
+			</div>
+			<hr class="my-4 opacity-20" />
+			<div>
+				<h3 class="text-2xl italic">Conversion Rate (From CNY)</h3>
+				<p class="text-lg">USD: {conversionUSD}</p>
+				<p class="text-lg">NPR: {conversionNPR}</p>
+			</div>
 			<div class="modal-action">
 				<button class="btn">Close</button>
 			</div>
