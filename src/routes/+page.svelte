@@ -1,5 +1,4 @@
 <script>
-	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fade, fly, slide } from 'svelte/transition';
