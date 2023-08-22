@@ -35,46 +35,51 @@
 	function csvUpload() {
 		const csvInput = document.getElementById('csvInput');
 		const selectedFile = csvInput.files[0];
-		const reader = new FileReader();
 
-		reader.onload = async function (event) {
-			const csvText = event.target.result;
-			const rows = csvText.split('\n');
-			let data = rows.map((row) => row.split(','));
+		if (selectedFile && selectedFile.type === 'text/csv') {
+			const reader = new FileReader();
 
-			const yenPrices = getSalePrices(data);
+			reader.onload = async function (event) {
+				const csvText = event.target.result;
+				const rows = csvText.split('\n');
+				let data = rows.map((row) => row.split(','));
 
-			let totalAmount = 0;
-			for (let i = 1; i < yenPrices.length - 1; i++) {
-				let amount = yenPrices[i].toString().replace('¥ ', '');
-				totalAmount = totalAmount + parseFloat(amount);
-			}
+				const yenPrices = getSalePrices(data);
 
-			try {
-				const response = await fetch(
-					'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/cny.json'
-				);
-
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
+				let totalAmount = 0;
+				for (let i = 1; i < yenPrices.length - 1; i++) {
+					let amount = yenPrices[i].toString().replace('¥ ', '');
+					totalAmount = totalAmount + parseFloat(amount);
 				}
 
-				const currencyData = await response.json();
-				let afterfees = totalAmount * 0.975;
+				try {
+					const response = await fetch(
+						'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/cny.json'
+					);
 
-				priceInCNY = afterfees.toFixed(2);
-				priceInUSD = (afterfees * currencyData.cny.usd).toFixed(2);
-				priceInNPR = (afterfees * currencyData.cny.npr).toFixed(2);
-				conversionUSD = currencyData.cny.usd;
-				conversionNPR = currencyData.cny.npr;
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
 
-				const modal = document.getElementById('modal');
-				modal.showModal();
-			} catch {
-				console.error('Error fetching data:', error);
-			}
-		};
-		reader.readAsText(selectedFile);
+					const currencyData = await response.json();
+					let afterfees = totalAmount * 0.975;
+
+					priceInCNY = afterfees.toFixed(2);
+					priceInUSD = (afterfees * currencyData.cny.usd).toFixed(2);
+					priceInNPR = (afterfees * currencyData.cny.npr).toFixed(2);
+					conversionUSD = currencyData.cny.usd;
+					conversionNPR = currencyData.cny.npr;
+
+					const modal = document.getElementById('modal');
+					modal.showModal();
+				} catch {
+					console.error('Error fetching data:', error);
+				}
+			};
+			reader.readAsText(selectedFile);
+		} else {
+			alert('Please upload a .csv file');
+		}
 	}
 
 	function getSalePrices(data) {
@@ -164,6 +169,7 @@
 									type="file"
 									id="csvInput"
 									class="file-input file-input-secondary w-full max-w-xs"
+									accept="text/csv"
 								/>
 								<button
 									class="btn btn-primary border-0 bg-secondary hover:bg-white text-white hover:text-secondary"
