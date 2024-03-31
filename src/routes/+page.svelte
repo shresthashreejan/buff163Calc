@@ -250,7 +250,9 @@
 
 	<footer class="footer footer-center p-4 z-50 absolute bottom-0">
 		<div>
-			<p class="italic">developed by <a href="https://github.com/shreejan-shrestha">shreejan</a></p>
+			<p class="italic">
+				developed by <a href="https://github.com/shresthashreejan" target="_blank">shreejan</a>
+			</p>
 		</div>
 	</footer>
 {/if}
